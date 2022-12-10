@@ -1,0 +1,131 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: poppins;
+    color: var(--Platinium);
+}
+html{
+    background-color: #040e1a;
+}
+:root{
+    --Rich-Black: #0D1B2A;
+    --Oxford-Blue: #1B263B;
+    --Bdazzled-Blue: #415A77;
+    --Shadow-Blue: #778DA9;
+    --Platinium: #E0E1DD;
+}
+a, li{
+    text-decoration: none;
+    list-style: none;
+}
+
+.container{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vmax;
+    width: 80%;
+    background-color: var(--Rich-Black);
+    gap: 30px;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--Oxford-Blue);
+    padding: 1rem 3rem;
+}
+
+.navbar > ul{
+    display: flex;
+    flex-direction: row;
+}
+.navbar li > a{
+    padding: 1rem 3rem;
+    transition: 0.5s ease-out;
+}
+.navbar li > a:hover{
+    background-color: white;
+    font-weight: bold;
+    color: var(--Rich-Black);
+}
+
+menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    padding: 1rem 3rem;
+}
+
+
+.section{
+    background-color: var(--Oxford-Blue);
+    padding: 4rem;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.section > h3{
+    text-align: center;
+    color: var(--Shadow-Blue);
+}
+.section > ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 30px;
+}
+.section ul > li{
+    border-radius: 20px;
+    background-color: var(--Bdazzled-Blue);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    transition: 0.3s ease-out;
+}
+.section ul > li:hover{
+    background-color: #778DA9;
+} 
+.section a{
+    text-align: center;
+    transition: 0.3s ease-in-out;
+}
+.section a:hover{
+    color: black;
+    font-weight: 500;
+}
+i{
+    color: white;
+    padding-right: 5px;
+    transition: 0.2s ease-in;
+}
+
+.boxes{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.boxes h5{
+    position: relative;
+    top: -26.5px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0px 0px 10px 10px;
+}
+
+.boxes img{
+    max-width: 300px;
+    height: 150px;
+    border-radius: 10px;
+}
