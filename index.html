@@ -4,59 +4,126 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/main.css">
+    <link rel="stylesheet" href="app/scss/style.css">
     <title>Recep Yolcu</title>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <!-- logo -->
-            <div class="logo">
-                <h1>RYO</h1>
+    <div class="container flex flex-vert">
+
+        <div class="effect effect-purple"></div>
+        <div class="effect effect-purple-1"></div>
+        <div class="effect effect-purple-2"></div>
+        <div class="effect effect-blue"></div>
+        <div class="effect effect-blue-1"></div>
+
+        <header class="header">
+
+            <nav class="flex flex-jc-sb flex-ai-c">
+                <a href="" class="header__logo">
+                    <h1>RYO</h1>
+                </a>
+    
+                <ul class="flex flex-horizontal flex-jc-sb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="/pages/projects.html">Projects</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <menu class="menu flex flex-vert flex-jc-c">
+            <div class="flex flex-jc-c flex-gap-40 flex-horizontal">
+                <img height="150px" width="110px" src="images/image 1.png" alt="">
+                <div class="text flex-vert flex-jc-sb">
+                    <h1>Hi, I’m Recep Yolcu</h1>
+                    <p>Computer Programming Student</p>
+                    <p>I am a 20-year-old student at Dokuz Eylul University in the second class. I can tell that Front-end development is my dream job. I’m into coding and love to code something in my free time; when I was in high school, I started coding and tried to develop a game a few times; I just spent so much effort on it.</p>
+                </div>
+            </div>
+
+            <div class="skills flex flex-gap-40 flex-jc-sb">
+                <div>
+                    <div class="block"><img src="images/html.png" alt="html"></div>
+                    <p>html</p>
+                </div>
+                <div>
+                    <div class="block"><img src="images/css.png" alt="css"></div>
+                    <p>css</p>
+                </div>
+                <div>
+                    <div class="block"><img src="images/javascript.png" alt="javascript"></div>
+                    <p>javascript</p>
+                </div>
+                <div>
+                    <div class="block"><img src="images/bootstrap.png" alt="bootstrap"></div>
+                    <p>bootstrap</p>
+                </div>
+                <div>
+                    <div class="block"><img src="images/figma.png" alt="figma"></div>
+                    <p>figma</p>
+                </div>
+                <div>
+                    <div class="block"><img src="images/csharp.png" alt="C#"></div>
+                    <p>C#</p>
+                </div>
+                <div>
+                    <div class="block"><img src="images/python.png" alt="python"></div>
+                    <p>python</p>
+                </div>
+                <div>
+                    <div class="block"><img src="images/delphi.png" alt="delphi"></div>
+                    <p>delphi</p>
+                </div>
             </div>
             
-            <!-- projects | about me | iletişim -->
-            <div class="navbar">
-                    <ul>
-                        <li><a href="#">About me</a></li>
-                        <li><a href="#">Social</a></li>
-                        <li><a href="https://github.com/Recepyolcu">gitHub</a></li>
-                    </ul>        
+        </menu>
+
+        <section class="flex flex-gap-100 flex-vert flex-ai-c">
+            <div><h1>Some Projects of Mine</h1></div>
+            <div class="projects flex flex-jc-sb flex-horizontal">
+                <div class="project-box flex flex-vert flex-ai-c">
+                    <img src="images/star.svg" alt="star-icon">
+                    <h2>Interactive rating component</h2>
+                    <p>frontendmentor.ioInteractive rating component challenge</p>
+                    <a href="#">
+                        <button>GO TO PROJECT</button>
+                    </a>
                 </div>
-            </header>
-            <menu>
-                <div class="section">
-                    <h3>My Web Projects</h3>
-                    <ul>
-                        <li><i class="fa-solid fa-window-maximize"></i><a href="https://recepyolcu.github.io/Interactive-rating-component/">Interactive rating component project</a></li>
-                        <li><i class="fa-solid fa-window-maximize"></i><a href="https://recepyolcu.github.io/Product-preview-card-component/">Product preview card component project</a></li>
-                    </ul>
+                <div class="project-box flex flex-vert flex-ai-c">
+                    <img src="images/star.svg" alt="star-icon">
+                    <h2>Product preview card component</h2>
+                    <p>frontendmentor.io Product preview card component challenge</p>
+                    <a href="#">
+                        <button>GO TO PROJECT</button>
+                    </a>
                 </div>
-                <div class="section blog">
-                    <h3>Blog</h3>
-                    <div class="boxes">
-                        <div class="blog-box">
-                            <a href="">
-                                <img src="/images/html.jpg" alt="HTML-blog">
-                                <h5>HTML</h5>
-                            </a>
-                        </div>
-                        <div class="blog-box">
-                            <a href="">
-                                <img src="/images/css.jpg" alt="CSS-blog">
-                                <h5>CSS</h5>
-                            </a>
-                        </div>
-                        <div class="blog-box">
-                            <a href="">
-                                <img src="/images/javascript.jpg" alt="javascript-blog">
-                                <h5>Javascript</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </menu>
-        </div>
-        <script src="https://kit.fontawesome.com/f6c403d4f3.js" crossorigin="anonymous"></script>
+            </div>
+        </section>
+
+        <section class="flex flex-vert flex-gap-40 flex-ai-c">
+            <div><h1>Social Media</h1></div>
+            <div class="medias flex flex-gap-40 flex-horizontal flex-jc-sb flex-ai-c">
+                <a href="https://www.instagram.com/recep.yolcu_/">
+                    <img src="images/instagram.svg" alt="instagram">
+                </a>
+                <a href="https://github.com/Recepyolcu">
+                    <img src="images/github.svg" alt="github">
+                </a>
+                <a href="https://www.linkedin.com/in/recep-yolcu-61b3b11b2/">
+                    <img src="images/linkedln.svg" alt="linkedln">
+                </a>
+                <a href="mailto:recepyolcu.coding@gmail.com">
+                    <img src="images/mail.svg" alt="mail">
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p class="copyright">© Copyright Recep Yolcu</p>
+    </footer>
+
+
+<script src="app/js/script.js"></script>
 </body>
 </html>

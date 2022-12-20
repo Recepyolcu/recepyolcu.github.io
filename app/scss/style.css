@@ -1,0 +1,327 @@
+html {
+  font-size: 100%;
+  box-sizing: border-box;
+  background-color: #11071F;
+  color: #ffffff;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  list-style: none;
+  text-decoration: none;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  line-height: 1.3;
+  font-family: poppins;
+  overflow-x: hidden;
+}
+
+a > h1 {
+  line-height: 0;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+.container {
+  width: 90%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: auto;
+  gap: 100px;
+  margin-bottom: 100px;
+}
+
+.effect {
+  position: absolute;
+  border-radius: 100%;
+  filter: blur(200px);
+  width: 300px;
+  height: 300px;
+  z-index: -1;
+}
+.effect[class*=-purple] {
+  background: rgba(113, 32, 126, 0.3);
+}
+.effect-purple {
+  right: 80px;
+  top: -450px;
+}
+.effect-purple-1 {
+  right: -150px;
+  top: 433px;
+}
+.effect-purple-2 {
+  right: 50px;
+  top: 1350px;
+}
+.effect[class*=-blue] {
+  background: rgba(32, 58, 126, 0.3);
+  width: 700px;
+  height: 700px;
+}
+.effect-blue {
+  left: -450px;
+  top: 189px;
+}
+.effect-blue-1 {
+  left: 50px;
+  top: 1150px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex-gap-40 {
+  gap: 40px;
+}
+.flex-gap-100 {
+  gap: 100px;
+}
+.flex-horizontal {
+  flex-direction: row;
+}
+.flex-vert {
+  flex-direction: column;
+}
+.flex-jc-sb {
+  justify-content: space-between;
+}
+.flex-jc-c {
+  justify-content: center;
+}
+.flex-ai-c {
+  align-items: center;
+}
+
+.header {
+  z-index: 1;
+}
+.header__logo img {
+  width: 50px;
+  height: auto;
+}
+.header ul {
+  width: 600px;
+}
+.header ul > li > a {
+  padding: 10px;
+  color: #ffffff;
+}
+.header > nav {
+  padding: 20px;
+}
+
+.menu {
+  padding: 0px;
+  display: flex;
+  gap: 100px;
+  align-items: center;
+}
+.menu .text {
+  flex-direction: column;
+  width: 50%;
+}
+.menu .text > h1 {
+  margin: 0px;
+}
+.menu .text > p:nth-child(2) {
+  margin-top: 0px;
+  font-weight: 100;
+}
+.menu .skills .block {
+  background-color: #251C31;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
+  width: 80px;
+  height: 80px;
+  margin: 0px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  transition: 0.5s ease-out;
+}
+.menu .skills p {
+  font-family: poppins;
+  font-weight: 300;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0;
+  transition: 0.5s ease-out;
+  text-transform: uppercase;
+}
+.menu .skills .block:hover {
+  box-shadow: 0px 0px 15px rgba(57, 27, 99, 0.5411764706);
+}
+.menu .skills .block:hover + p {
+  opacity: 1;
+}
+
+section .project-box {
+  background: radial-gradient(90.16% 143.01% at 15.32% 21.04%, rgba(105, 59, 147, 0.2) 0%, rgba(110, 191, 244, 0.0447917) 77.08%, rgba(70, 144, 213, 0) 100%);
+  background-blend-mode: overlay, normal;
+  -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(40px);
+  border-radius: 15px;
+  padding: 50px;
+  border: 3px solid white;
+  text-align: center;
+  width: 45%;
+  height: 700px;
+  justify-content: flex-end;
+}
+section .project-box h2 {
+  text-transform: uppercase;
+  color: #9A70D4;
+}
+section .project-box p {
+  font-size: 13px;
+}
+section .project-box img {
+  position: absolute;
+  top: -88px;
+}
+section .project-box button {
+  font-family: poppins;
+  font-weight: 700;
+  font-size: large;
+  color: white;
+  padding: 15px 30px;
+  background-color: #2C1250;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 5rem;
+  margin-top: 40px;
+  transition: 0.5s ease-out;
+}
+section .project-box button:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 15px rgba(57, 27, 99, 0.5411764706);
+}
+section .medias > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  background-color: #2C1250;
+  border-radius: 5rem;
+  transition: 0.5s ease-out;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
+}
+section .medias > a:hover {
+  width: 100px;
+  height: 100px;
+}
+section .medias > a > img {
+  width: 50%;
+}
+
+footer {
+  background-color: #0b0216;
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+footer .copyright {
+  text-align: center;
+  font-family: monospace;
+}
+
+section a:hover {
+  cursor: pointer;
+}
+section .main-projects .frame {
+  display: none;
+  gap: 20px;
+  flex-direction: column;
+  align-items: flex-end;
+  position: absolute;
+  top: 300px;
+  width: 90%;
+  height: 90%;
+  z-index: 1;
+}
+section .main-projects .frame .close-btn {
+  background-color: #2C1250;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
+  min-width: 70px;
+  min-height: 70px;
+  border-radius: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section .main-projects .frame .close-btn svg {
+  fill: white;
+  width: 30px;
+  height: auto;
+}
+section .main-projects .frame iframe {
+  display: block;
+  background-color: white;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  border: 3px solid white;
+}
+section .main-project-box {
+  background: radial-gradient(90.16% 143.01% at 15.32% 21.04%, rgba(105, 59, 147, 0.2) 0%, rgba(110, 191, 244, 0.0447917) 77.08%, rgba(70, 144, 213, 0) 100%);
+  background-blend-mode: overlay, normal;
+  -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(40px);
+  border-radius: 15px;
+  padding: 50px;
+  border: 3px solid white;
+  text-align: center;
+  max-width: 47%;
+  min-height: 350px;
+  justify-content: flex-end;
+}
+section .main-project-box h2 {
+  text-transform: uppercase;
+  color: #9A70D4;
+}
+section .main-project-box > p {
+  font-size: 13px;
+}
+section .main-project-box .button {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+section .main-project-box a {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 40%;
+  gap: 20px;
+  background: transparent;
+  font-family: poppins;
+  font-weight: 700;
+  font-size: medium;
+  color: white;
+  padding: 15px 30px;
+  background-color: #2C1250;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 5rem;
+  margin-top: 40px;
+  transition: 0.5s ease-out;
+}
+section .main-project-box a > img {
+  width: 15%;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,25 @@
+.header {
+
+    z-index: 1;
+    
+    &__logo {
+
+        img {
+            width: 50px;
+            height: auto;
+            
+        }
+    }
+    
+    ul {
+        width: 600px;
+    }
+    ul > li > a {
+        padding: 10px;
+        color: $white;
+    }
+
+    > nav {
+        padding: 20px;
+    }
+}

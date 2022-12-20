@@ -1,0 +1,12 @@
+footer {
+    background-color: #0b0216;
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    .copyright{
+        text-align: center;
+        font-family: monospace;
+    }
+}
