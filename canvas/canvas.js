@@ -2,17 +2,17 @@ import noise3D from "./random.js";
 
 export function printCanv (bgColor, canvas, context) {
   context.clearRect(0, 0, canvas.width, canvas.height);
-
   context.fillStyle = bgColor;
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 export class Canvas {
-  constructor (canvasIndex, width, height) {
-    this.canvasIndex = canvasIndex;
-    this.canvas = document.querySelectorAll('canvas')[canvasIndex];
-    this.canvas.width = width;
-    this.canvas.height = height;
+  constructor (canvasId, width, height) {
+    this.canvas         = document.getElementById(canvasId);
+    this.width          = width;
+    this.height         = height;
+    this.canvas.width   = this.width;
+    this.canvas.height  = this.height;
   }
 
   getContext () {
@@ -48,16 +48,16 @@ export class Random {
       throw new TypeError('Expected all arguments to be numbers');
     }
   
-    return Math.floor(random(min, max));
+    return Math.floor(this.range(min, max));
   }
 
   pick (array) {
     if (array.length === 0) return undefined;
-    return array[rangeFloor(0, array.length)];
+    return array[this.rangeFloor(0, array.length)];
   }
 
   rgbColor (r, g, b) {
-    return "rgb(" + random(0, r) + "," + random(0, g) + "," + random(0, b) + ")";
+    return "rgb(" + this.range(0, r) + "," + this.range(0, g) + "," + this.range(0, b) + ")";
   }
 
 }
@@ -433,7 +433,7 @@ export class canvText {
 }
 
 export class TypeCanvas {
-    constructor (cell, fontFamily, text) {
+    constructor (canvas, cell, fontFamily, text) {
         this.typeCanvas         = document.createElement('canvas');
         this.context            = this.typeCanvas.getContext('2d');
         this.cell               = cell;
@@ -499,7 +499,7 @@ export class TypeCanvas {
         if (v < 200) return '*';
 
         const glyphs = '_= /'.split('');
-        return pick(glyphs);
+        return random.pick(glyphs);
       }
 
       for (let i = 0; i < this.numCells; i++) {
