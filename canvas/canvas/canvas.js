@@ -7,6 +7,19 @@ export function printCanv (bgColor, canvas, context) {
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
+export class Canvas {
+  constructor (canvasIndex, width, height) {
+    this.canvasIndex = canvasIndex;
+    this.canvas = document.querySelectorAll('canvas')[canvasIndex];
+    this.canvas.width = width;
+    this.canvas.height = height;
+  }
+
+  getContext () {
+    return this.canvas.getContext('2d');
+  }
+}
+
 export class Random {
   constructor () {
 
@@ -76,39 +89,32 @@ export class CanvasUtil {
       return outVal;
     }
   }
+
+  colorToString (color) {
+    return `rgb(${color.r}, ${color.g}, ${color.b})`;
+  }
   
 }
 
-export class Arc {
-  constructor (radius, startAngle, endAngle) {
-    this.radius     = radius;
-    this.startAngle = startAngle;
-    this.endAngle   = endAngle;
-    this.pattern    = pattern; 
-  }
-
-}
-
 export class Pattern {
-  constructor (canvas, cols, rows, lineWidth, size) {
+  constructor (canvas, cols, rows, size) {
     this.width     = canvas.width;
     this.height    = canvas.height;
     this.cols      = cols;
     this.rows      = rows;
-    this.lineWidth = lineWidth;
-    this.rectw     = this.width  * size;
-    this.recth     = this.height * size;
-    this.cellw     = this.rectw  / this.cols;
-    this.cellh     = this.recth  / this.rows;
-    this.margx     = (this.width  - this.rectw) * 0.5;
-    this.margy     = (this.height - this.recth) * 0.5;
     this.numCells  = this.cols * this.rows;
+    this.w         = this.width  * size;
+    this.h         = this.height * size;
+    this.cellw     = this.w  / this.cols;
+    this.cellh     = this.h  / this.rows;
+    this.margx     = (this.width  - this.w) * 0.5;
+    this.margy     = (this.height - this.h) * 0.5;
   }
 
-  rect (context, fillType, color, padding) {
+  rect (context, fillType, lineWidth, color, padding) {
     for (let i = 0; i < this.numCells; i++) {
 
-      context.lineWidth   = this.lineWidth;
+      context.lineWidth   = lineWidth;
       context.strokeStyle = color;
       context.fillStyle   = color;
 
@@ -120,6 +126,8 @@ export class Pattern {
       context.save();
       context.translate(this.x, this.y);
       context.translate(this.margx, this.margy);
+      context.translate(this.w * 0.5, this.h * 0.5);
+      context.translate(padding * 0.5, padding * 0.5);
       context.beginPath();
       if (fillType == 'fill')   context.fillRect(0, 0, this.cellw - padding, this.cellh - padding);
       if (fillType == 'stroke') context.rect(0, 0, this.cellw - padding, this.cellh - padding); context.stroke();
@@ -128,10 +136,10 @@ export class Pattern {
     }
   }
 
-  randomRect (context, fillType, color, padding, frequency) {
+  randomRect (context, fillType, lineWidth, color, padding, frequency) {
     for (let i = 0; i < this.numCells; i++) {
 
-      context.lineWidth   = this.lineWidth;
+      context.lineWidth   = lineWidth;
       context.strokeStyle = color;
       context.fillStyle   = color;
 
@@ -157,10 +165,10 @@ export class Pattern {
     }
   }
 
-  arc (context, fillType, color, radius, startAngle, endAngle) {
+  arc (context, fillType, lineWidth, color, radius, startAngle, endAngle) {
     for (let i = 0; i < this.numCells; i++) {
 
-      context.lineWidth   = this.lineWidth;
+      context.lineWidth   = lineWidth;
       context.strokeStyle = color;
       context.fillStyle   = color;
 
@@ -181,10 +189,10 @@ export class Pattern {
     }
   }
 
-  randomArc (context, fillType, color, radius, startAngle, endAngle, frequency) {
+  randomArc (context, fillType, lineWidth, color, radius, startAngle, endAngle, frequency) {
     for (let i = 0; i < this.numCells; i++) {
 
-      context.lineWidth   = this.lineWidth;
+      context.lineWidth   = lineWidth;
       context.strokeStyle = color;
       context.fillStyle   = color;
 
@@ -212,6 +220,9 @@ export class Pattern {
 
 }
 
+const random = new Random();
+const util = new CanvasUtil();
+
 
 class Vector {
     constructor (x, y) {
@@ -229,15 +240,15 @@ class Vector {
 export class Agent {
     constructor (x, y) {
       this.pos    = new Vector(x, y);
-      this.vel    = new Vector(random(-0.5, 0.6), random(-0.6, 0.6));
-      this.radius = random(3, 6);
+      this.vel    = new Vector(random.range(-0.5, 0.6), random.range(-0.6, 0.6));
+      this.radius = random.range(3, 6);
       this.agents = [];
     }
 
     createRandomPosAgents (numOfAgents, width, height) {
       for (let i = 0; i < numOfAgents; i++) {
-        const x = random(0, width);
-        const y = random(0, height);
+        const x = random.range(0, width);
+        const y = random.range(0, height);
         this.agents.push(new Agent(x, y));
       }
     }
@@ -251,7 +262,7 @@ export class Agent {
     
             const dist = agent.pos.getDistance(other.pos);
     
-            context.lineWidth = mapRange(dist, 0, 100, 5, 1);
+            context.lineWidth = util.mapRange(dist, 0, 100, 5, 1);
     
             if (dist > 100) continue
     
@@ -307,7 +318,7 @@ export class Agent {
 }
 
 export class Grid {
-  constructor () {
+  constructor (canvas) {
     this.frame      = 0;
     this.cols       = 30;
     this.rows       = 30;
@@ -322,19 +333,15 @@ export class Grid {
     this.angle;
   }
 
-  AnimateGrid (context) {
-    const animate = () => {
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = 'black';
-      context.fillRect(0, 0, canvas.width, canvas.height);
+  // AnimateGrid (context) {
+  //   const animate = () => {
       
-      this.createGrid(context);
+  //     this.createGrid(context);
 
-      requestAnimationFrame(animate);
-    }
-    animate();
-  }
+  //     requestAnimationFrame(animate);
+  //   }
+  //   animate();
+  // }
 
   createGrid (context) {
 
@@ -582,7 +589,6 @@ export class ImageDraw {
     
     for (let i = 0; i < this.numCells; i++) {
       setTimeout(() => {
-
         
         const col = i % this.cols;
         const row = Math.floor(i / this.cols);
@@ -620,7 +626,6 @@ export class ImageDraw {
 
         canvasContext.restore();
       }, 200);
-
     }
   }
 }
