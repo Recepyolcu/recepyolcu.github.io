@@ -440,7 +440,7 @@ export class TypeCanvas {
         this.cols               = Math.floor(canvas.width  / this.cell);
         this.rows               = Math.floor(canvas.height / this.cell);
         this.numCells           = this.cols * this.rows;
-        this.typeCanvas.width   = this.cols;
+        this.typeCanvas.width   = this.cols ;
         this.typeCanvas.height  = this.rows;
         this.fontFamily         = fontFamily;
         this.pos                = [];
@@ -472,7 +472,6 @@ export class TypeCanvas {
 
       context.fillStyle = 'black';
       context.fillRect(0, 0, this.typeCanvas.width, this.typeCanvas.height);
-      
       context.fillStyle = 'white';
       
       context.save();
@@ -485,12 +484,9 @@ export class TypeCanvas {
     bitmap (context, canvasContext, fillType, size) {
 
       this.draw(context);
-
+      
       const typeData = context.getImageData(0, 0, this.cols, this.rows).data;
-
-      canvasContext.fillStyle = 'black';
-      canvasContext.fillRect(0, 0, this.typeCanvas.width, this.typeCanvas.height);
-
+      
 
       const getGlyph = (v) => {
         if (v < 50) return '';
@@ -539,8 +535,8 @@ export class TypeCanvas {
             break;
 
           case 'glyph':
-            this.font(canvasContext, this.cell * 3);
-            if (Math.random() < 0.5) this.font(canvasContext, this.cell * 3);
+            this.font(canvasContext, this.cell * 0.6);
+            if (Math.random() > 0.6) this.font(canvasContext, this.cell * 3);
             const glyph = getGlyph(r);
             canvasContext.fillText(glyph, 0, 0);
             break;
