@@ -9,34 +9,77 @@
 </head>
 <body>
     <div class="container">
+
         <header>
             <div class="logo">
                 <canvas id="logo"></canvas>
+                <p>Front-end Developer</p>
             </div>
             <nav>
                 <ul>
-                    <li><a class="nav-a" href="">Home</a></li>
+                    <li><a class="nav-a active">Home</a></li>
                     <li><a class="nav-a" href="">About</a></li>
-                    <li><a class="nav-a" href="">Projects</a></li>
+                    <li><a class="nav-a" href="projects.html">Projects</a></li>
                 </ul>
             </nav>
         </header>
 
         <menu>
             <canvas id="banner"></canvas> 
+            <div class="slider">
+                <div class="slide">
+                    <canvas id="slider-canv"></canvas>
+                    <div class="buttons">
+                        <a href="#"><button></button></a>
+                        <a href="#"><button></button></a>
+                    </div>
+                </div>
+                <div class="text">
+                    <h2>About Me</h2>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non nobis error labore soluta aliquam. Natus et non accusantium! Sint est voluptate perferendis praesentium laboriosam eos tempora eius vel animi provident.</p>
+                </div>
+            </div>
         </menu>
 
         <section>
-            <canvas id="section-canvas"></canvas>
-            
-
+            <h1>Some Of My Canvas Drawings</h1>
+            <div class="canvases">
+                <div class="canvas">
+                    <h3>Project 1</h3>
+                    <a href=""><img src="" alt=""></a>
+                </div>
+                <div class="canvas">
+                    <h3>Project 2</h3>
+                    <a href=""><img src="" alt=""></a>
+                </div>
+                <div class="canvas">
+                    <h3>Project 3</h3>
+                    <a href=""><img src="" alt=""></a>
+                </div>
+                <div class="canvas">
+                    <h3>Project 4</h3>
+                    <a href=""><img src="" alt=""></a>
+                </div>
+                <div class="canvas">
+                    <h3>Project 5</h3>
+                    <a href=""><img src="" alt=""></a>
+                </div>
+                <div class="canvas">
+                    <h3>Project 6</h3>
+                    <a href=""><img src="" alt=""></a>
+                </div>
+            </div>
         </section>
 
         <footer></footer>
+
     </div>
     
     <div class="cursor"></div>
-    <div class="cursor2"></div>
+    
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
 
     <script type="module" defer src="/canvas/mainpage.js"></script>
 </body>
