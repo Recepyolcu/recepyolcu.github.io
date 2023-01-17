@@ -1,61 +1,43 @@
 import { Canvas, CanvasUtil, Pattern, TypeCanvas, printCanv } from './canvas.js';
 
-const bgColor = 'rgb(10, 10, 10)';
-const body = document.body;
-body.style.background = bgColor;
+const util = new CanvasUtil();
+
+const sections  = document.querySelectorAll('section'); 
+
+var cursor = document.querySelector('.cursor');
+var a = document.querySelectorAll('a');
 
 let canWidth = window.innerWidth;
-let canHeight = window.innerHeight;
+let canHeight = window.innerHeight * 0.55;
 
+// Canvases
 let canvas = new Canvas('banner', canWidth, canHeight);
 const context = canvas.getContext();
 
-const logoCanvas = new Canvas('logo', 60, 60);
-const logoContext = logoCanvas.getContext();
-
-logoCanvas.canvas.style.position = 'absolute';
-logoCanvas.canvas.style.top = '0px';
-logoCanvas.canvas.style.left = '0px';
-logoCanvas.canvas.style.border = '2px solid white';
-
-const pattern = new Pattern(logoCanvas, 5, 5, 0.80);
-function randomPattern () {
-    const rnd = Math.floor(Math.random() * (4 - 1) + 1);
-    const freq = Math.random() * (1 - 0.3) + 0.3;
-    if (rnd == 1) pattern.randomRect(logoContext, 'stroke', 2, 'white', Math.random() * 5, freq);
-    if (rnd == 2) pattern.randomRect(logoContext, 'fill', 2, 'white', Math.random() * 5, freq);
-    if (rnd == 3) pattern.randomArc(logoContext, 'stroke', 2, 'white', 5, 0, Math.PI * 2, freq);
-    if (rnd == 4) pattern.randomArc(logoContext, 'fill', 2, 'white', 5, 0, Math.PI * 2, freq);
-}
-randomPattern();
-
-
-
 window.addEventListener('resize', () => {
     canWidth  = window.innerWidth;
-    canHeight = window.innerHeight; 
-    canvas    = new Canvas('banner', canWidth, canHeight);
+    canHeight = window.innerHeight * 0.55; 
+
+    clearTimeout(debounceResize);
+    debounceResize = setTimeout(() => {
+      totalPageHeight = document.body.scrollHeight - window.innerHeight;
+    }, 250);
+
+    canvas = new Canvas('banner', canWidth, canHeight);
     drawBanner();
 });
 
-
-var cursor = document.querySelector('.cursor');
-var a = document.querySelectorAll('.nav-a');
-
-document.addEventListener('mousemove', function(e){
+document.addEventListener('mousemove', (e) => {
   var x = e.clientX;
   var y = e.clientY;
   cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
 });
-
-document.addEventListener('mousedown', function(){
-  cursor.classList.add('click');
+document.addEventListener('mousedown', () => {
+  cursor.classList.add('click-white');
 });
-
-document.addEventListener('mouseup', function(){
-  cursor.classList.remove('click')
+document.addEventListener('mouseup', () => {
+  cursor.classList.remove('click-white');
 });
-
 a.forEach(item => {
   item.addEventListener('mouseover', () => {
     cursor.classList.add('hover');
@@ -63,17 +45,52 @@ a.forEach(item => {
   item.addEventListener('mouseleave', () => {
     cursor.classList.remove('hover');
   });
-})
+});
+
+// Random Logo Pattern Generate
+const logoCanvas = new Canvas('logo', 60, 60);
+const logoContext = logoCanvas.getContext();
+
+const cell = Math.floor(Math.random() * (10 - 3) + 3);
+
+const pattern = new Pattern(logoCanvas, cell, cell, 0.80);
+function randomPattern () {
+    const rnd = Math.floor(Math.random() * (4 - 1) + 1);
+    const freq = Math.random() * (1 - 0.3) + 0.3;
+    let radius = 5;
+    if (rnd == 1) pattern.randomRect(logoContext, 'stroke', 2, 'white', Math.random() * 5, freq);
+    if (rnd == 2) pattern.randomRect(logoContext, 'fill', 2, 'white', Math.random() * 5, freq);
+    if (rnd == 3) {
+      if (cell > 5) radius = 3;
+      pattern.randomArc(logoContext, 'stroke', 2, 'white', radius, 0, Math.PI * 2, freq);
+    };
+    if (rnd == 4) {
+      if (cell > 5) radius = 3;
+      pattern.randomArc(logoContext, 'fill', 2, 'white', radius, 0, Math.PI * 2, freq);
+    }
+}
+randomPattern();
 
 function drawBanner () {
-    printCanv('transparent', canvas, context);
-    const typeCanvas = new TypeCanvas(canvas, canWidth * 0.003, 'poppins', 'Recep Yolcu');
-    typeCanvas.font(typeCanvas.context, typeCanvas.cols * 0.13);
-    typeCanvas.centerText(typeCanvas.context);
-    typeCanvas.bitmap(typeCanvas.context, context, 'glyph', 20);
-    return context.getImageData(0, 0, canWidth, canHeight);
+  printCanv('transparent', canvas, context);
+  const typeCanvas = new TypeCanvas(canvas, canWidth / 300, 'Recep Yolcu');
+
+  typeCanvas.font(typeCanvas.context, 300, 49, 'poppins');
+  typeCanvas.centerText();
+  typeCanvas.bitmap(typeCanvas.context, context, 'glyph', 2);
+
+  return context.getImageData(0, 0, canWidth, canHeight);
 }
 
 drawBanner();
 
 
+// Custom Scroll
+const pb = document.getElementById("progress-bar");
+let debounceResize;
+
+window.addEventListener("scroll", () => {
+  let totalPageHeight = document.body.scrollHeight - window.innerHeight;
+  let newpbHeight = window.pageYOffset / totalPageHeight;
+  pb.style.height = `${util.mapRange(newpbHeight, 0, 1, 0, window.innerHeight - 24)}px`;
+});
