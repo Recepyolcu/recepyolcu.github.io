@@ -318,13 +318,13 @@ export class Agent {
 }
 
 export class Grid {
-  constructor (canvas) {
+  constructor (canvas, cols, rows) {
     this.frame      = 0;
-    this.cols       = 30;
-    this.rows       = 30;
+    this.cols       = cols;
+    this.rows       = rows;
     this.numCells   = this.cols * this.rows;
-    this.gridw      = canvas.width * 0.9;
-    this.gridh      = canvas.height * 0.9;
+    this.gridw      = canvas.width * 1;
+    this.gridh      = canvas.height * 1;
     this.cellw      = this.gridw / this.cols; 
     this.cellh      = this.gridh / this.rows;
     this.margx      = (canvas.width - this.gridw) * 0.5;
@@ -333,21 +333,11 @@ export class Grid {
     this.angle;
   }
 
-  // AnimateGrid (context) {
-  //   const animate = () => {
-      
-  //     this.createGrid(context);
-
-  //     requestAnimationFrame(animate);
-  //   }
-  //   animate();
-  // }
-
   createGrid (context) {
 
     for (let i = 0; i < this.numCells; i++) {
 
-      this.frame += 0.0003;
+      this.frame += 0.0001;
 
       const col     = i % this.cols;
       const row     = Math.floor(i / this.cols);
@@ -356,15 +346,15 @@ export class Grid {
       this.w        = this.cellw * 0.8;
       this.h        = this.cellh * 0.8;
 
-      const freq     = 0.004;
-      const amp      = 0.3;
+      const freq     = 0.002;
+      const amp      = 0.1;
       const scaleMin = 1;
-      const scaleMax = 5;
+      const scaleMax = 10;
   
       // const n = random.noise2D(x + frame * 10, y, params.freq);
       const n = noise3D(this.x, this.y, this.frame * 10, freq * 2);
       this.angle = n * Math.PI * amp;
-      this.scale = mapRange(n, -1, 1, scaleMin, scaleMax);
+      this.scale = util.mapRange(n, -1, 1, scaleMin, scaleMax);
       
       context.save();
       context.translate(this.x, this.y);
@@ -433,7 +423,7 @@ export class canvText {
 }
 
 export class TypeCanvas {
-    constructor (canvas, cell, fontFamily, text) {
+    constructor (canvas, cell, text) {
         this.typeCanvas         = document.createElement('canvas');
         this.context            = this.typeCanvas.getContext('2d');
         this.cell               = cell;
@@ -442,21 +432,22 @@ export class TypeCanvas {
         this.numCells           = this.cols * this.rows;
         this.typeCanvas.width   = this.cols ;
         this.typeCanvas.height  = this.rows;
-        this.fontFamily         = fontFamily;
         this.pos                = [];
         this.text               = text;
     }
 
-    font (context, fontSize) {
+    font (context, fontWeight, fontSize, fontFamily) {
+      this.fontWeight = fontWeight;
       this.fontSize = fontSize;
-      context.font = `${this.fontSize}px ${this.fontFamily}`;
+      this.fontFamily = fontFamily;
+      context.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
       context.textBaseline = "middle";
       context.textAlign = 'center';
     }
     
-    centerText (context) {
+    centerText () {
       
-      const metrics = context.measureText(this.text);
+      const metrics = this.context.measureText(this.text);
       
       this.mx = metrics.actualBoundingBoxLeft   * -1;
       this.my = metrics.actualBoundingBoxAscent * -1;
@@ -486,7 +477,6 @@ export class TypeCanvas {
       this.draw(context);
       
       const typeData = context.getImageData(0, 0, this.cols, this.rows).data;
-      
 
       const getGlyph = (v) => {
         if (v < 50) return '';
@@ -510,8 +500,7 @@ export class TypeCanvas {
         const b = typeData[i * 4 + 2];
         const a = typeData[i * 4 + 3];
         
-        // fontSize parametresi ne kadar büyük olursa text pattern i o kadar büyük olur (iç içe geçebilir)
-        canvasContext.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        canvasContext.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
         
         canvasContext.save();
         canvasContext.translate(x, y);
@@ -529,14 +518,14 @@ export class TypeCanvas {
             break;
 
           case 'text':
-            this.font(canvasContext, size);
+            this.font(canvasContext, this.fontWeight, size);
             canvasContext.translate(this.cell * 0.5, this.cell * 0.5);
             canvasContext.fillText(this.text, 0, 0);
             break;
 
           case 'glyph':
-            this.font(canvasContext, this.cell * 0.6);
-            if (Math.random() > 0.6) this.font(canvasContext, this.cell * 3);
+            this.font(canvasContext, this.fontWeight, this.cell, this.fontFamily);
+            if (Math.random() > 0.6) this.font(canvasContext, this.fontWeight, this.cell * 5, this.fontFamily);
             const glyph = getGlyph(r);
             canvasContext.fillText(glyph, 0, 0);
             break;
