@@ -1,7 +1,15 @@
 @font-face {
     font-family: neue machina;
     src: url('https://recepyolcu.github.io/fonts/NeueMachina/NeueMachina-Light.otf');
+    font-style: normal;
+}
+@font-face {
+    font-family: neue machina;
     src: url('https://recepyolcu.github.io/fonts/NeueMachina/NeueMachina-Regular.otf');
+    font-style: normal;
+}
+@font-face {
+    font-family: neue machina;
     src: url('https://recepyolcu.github.io/fonts/NeueMachina/NeueMachina-Ultrabold.otf');
     font-style: normal;
 }
