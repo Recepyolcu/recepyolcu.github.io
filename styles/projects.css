@@ -1,0 +1,8 @@
+.projects {
+    display: flex;
+    flex-direction: column;
+}
+
+.project{
+    border: 1px solid white;
+}
