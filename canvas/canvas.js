@@ -20,6 +20,41 @@ export class Canvas {
   }
 }
 
+export class YinYang {
+  constructor (canvas) {
+    this.canvas = canvas;
+    this.frame  = 0.001;
+  }
+
+  circle(context, y, radius, color) {
+    context.beginPath();
+    context.fillStyle = color;
+    context.arc(this.canvas.width * 0.5, y + this.canvas.height * 0.5, radius, 0, Math.PI * 2);
+    context.fill();
+  }
+
+  draw (context, radius) {
+
+    this.circle(context, 0, radius + 2, 'white');
+    context.fillStyle = 'black';
+
+    context.beginPath();
+    context.arc(this.canvas.width * 0.5, this.canvas.height * 0.5, radius, -Math.PI * .5, Math.PI * .5);
+    context.fill();
+
+    this.circle(context,  radius / 2, radius / 2, 'white');
+    this.circle(context, -radius / 2, radius / 2, 'black');
+    this.circle(context,  radius / 2, radius / 8, 'black');
+    this.circle(context, -radius / 2, radius / 8, 'white');
+
+  }
+
+  animate (speed) {
+    this.frame += speed
+    this.canvas.style.transform = `rotate(${this.frame}deg)`;
+  }
+}
+
 export class Random {
   constructor () {
 
@@ -126,13 +161,51 @@ export class Pattern {
       context.save();
       context.translate(this.x, this.y);
       context.translate(this.margx, this.margy);
-      context.translate(this.w * 0.5, this.h * 0.5);
+      // context.translate(this.w * 0.5, this.h * 0.5);
       context.translate(padding * 0.5, padding * 0.5);
       context.beginPath();
-      if (fillType == 'fill')   context.fillRect(0, 0, this.cellw - padding, this.cellh - padding);
-      if (fillType == 'stroke') context.rect(0, 0, this.cellw - padding, this.cellh - padding); context.stroke();
+      if (fillType === 'fill')   context.fillRect(0, 0, this.cellw - padding, this.cellh - padding);
+      if (fillType === 'stroke') context.rect(0, 0, this.cellw - padding, this.cellh - padding); context.stroke();
       context.restore();
 
+    }
+  }
+
+  text (context, text, fontWeight, fontSize, fontFamily) {
+
+    context.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+
+    const textList = text.toUpperCase().split(''); 
+    const pos = [];
+
+    for (let i = 0; i < textList.length; i++) {
+
+      const metrics = context.measureText(textList[i]);
+      
+      const mx = metrics.actualBoundingBoxLeft   * -1;
+      const my = metrics.actualBoundingBoxAscent * -1;
+      const mw = mx * -1 + metrics.actualBoundingBoxRight;
+      const mh = my * -1 + metrics.actualBoundingBoxDescent;
+      
+      pos.push((this.cols - mw) * 0.5 - mx);
+      pos.push((this.rows - mh) * 0.5 - my); 
+
+      const col     = i % this.cols;
+      const row     = Math.floor(i / this.cols);
+      this.x        = col * this.cellw;
+      this.y        = row * this.cellh;
+
+
+      context.save();
+      context.translate(this.x - 2, this.y - 2);
+      context.translate(this.cellw * 0.5, this.cellh * 0.5);
+      context.translate(this.margx, this.margy);
+      context.translate(pos[0], pos[1]);
+      context.fillText(textList[i], 0, 0);
+      context.beginPath();
+      context.restore();
     }
   }
 
@@ -156,8 +229,8 @@ export class Pattern {
 
       if (Math.random() < frequency){
         context.rect(0, 0, this.cellw - padding, this.cellh - padding);
-        if (fillType == 'fill')   context.fill();
-        if (fillType == 'stroke')  context.stroke();
+        if (fillType === 'fill')   context.fill();
+        if (fillType === 'stroke')  context.stroke();
       }
 
       context.restore();
@@ -182,8 +255,8 @@ export class Pattern {
       context.translate(this.margx, this.margy);
       context.translate(this.cellw * 0.5, this.cellh * 0.5);
       context.beginPath();
-      if(fillType == 'fill')   context.arc(0, 0, radius, startAngle, endAngle); context.fill();
-      if(fillType == 'stroke') context.arc(0, 0, radius, startAngle, endAngle); context.stroke();
+      if(fillType === 'fill')   context.arc(0, 0, radius, startAngle, endAngle); context.fill();
+      if(fillType === 'stroke') context.arc(0, 0, radius, startAngle, endAngle); context.stroke();
       context.restore();
 
     }
@@ -208,8 +281,8 @@ export class Pattern {
       context.beginPath();
 
       if (Math.random() < frequency){
-        if(fillType == 'fill')   context.arc(0, 0, radius, startAngle, endAngle); context.fill();
-        if(fillType == 'stroke') context.arc(0, 0, radius, startAngle, endAngle); context.stroke();
+        if(fillType === 'fill')   context.arc(0, 0, radius, startAngle, endAngle); context.fill();
+        if(fillType === 'stroke') context.arc(0, 0, radius, startAngle, endAngle); context.stroke();
       }
 
       context.restore();
@@ -337,7 +410,7 @@ export class Grid {
 
     for (let i = 0; i < this.numCells; i++) {
 
-      this.frame += 0.0001;
+      this.frame += 0.15 / this.numCells;
 
       const col     = i % this.cols;
       const row     = Math.floor(i / this.cols);
@@ -347,8 +420,8 @@ export class Grid {
       this.h        = this.cellh * 0.8;
 
       const freq     = 0.002;
-      const amp      = 0.1;
-      const scaleMin = 1;
+      const amp      = 0.2;
+      const scaleMin = 0.1;
       const scaleMax = 10;
   
       // const n = random.noise2D(x + frame * 10, y, params.freq);
@@ -363,7 +436,7 @@ export class Grid {
       context.rotate(this.angle);
 
       context.lineWidth = this.scale;
-      context.strokeStyle = "rgb(255, 0, 150)";
+      context.strokeStyle = "rgb(140, 255, 0)";
       context.lineCap = "butt";
 
       context.beginPath();
@@ -614,3 +687,5 @@ export class ImageDraw {
     }
   }
 }
+
+
