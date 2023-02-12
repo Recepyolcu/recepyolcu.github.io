@@ -1,3 +1,11 @@
+@font-face {
+    font-family: neue machina;
+    src: url('https://recepyolcu.github.io/fonts/Neue Machina/NeueMachina-Light.otf');
+    src: url('https://recepyolcu.github.io/fonts/Neue Machina/NeueMachina-Regular.otf');
+    src: url('https://recepyolcu.github.io/fonts/Neue Machina/NeueMachina-UltraBold.otf');
+    font-style: normal;
+}
+
 :root {
     --background: rgb(15, 15, 15);
     --main-gray: rgb(141, 141, 141);
