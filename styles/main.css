@@ -161,15 +161,9 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5rem;
-    height: 60px;
 }
-.logo > p {
-    font-family: poppins, serif;
-    font-size: 17px;
-    font-weight: 100;
-}
-#logo{
+
+[id *="logo"]{
     width: 60px;
     height: 60px;
     border: 2px solid white;
@@ -431,10 +425,12 @@ section {
     color: var(--main-green);
 }
 
-.skills ,.framework-libraries{
+.skills{
     display: flex;
     justify-content: center;
-    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90%;
     gap: 30px;
 }
 
@@ -442,14 +438,20 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 30px;
+    gap: 10px;
+    padding: 20px;
     border: 3px solid var(--text-color-4);
     min-width: 160px;
     transition: 0.3s ease-out;
 }
 [class *= '-box']:hover {
     border: 3px solid var(--main-green);
+}
+[class *= '-box'] > p {
+    font-weight: 300;
+    font-size: 12px;
+    opacity: 0;
+    transition: 0.3s ease-out;
 }
 
 .skills h3 {
@@ -462,12 +464,49 @@ section {
     width: 80px;
 }
 
-.gap-box {
-    visibility: hidden;
+.exp {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
 }
 
-.framework-libraries img {
-    width: 80px;
+[class *="star"] {
+    width: 20px;
+    height: 20px;
+}
+
+.star {
+    fill: white;
+    stroke: var(--text-color-4);
+    stroke-width: 40px;
+}
+.empty-star {
+    fill: var(--text-color-4);
+}
+
+
+#projects {
+    border: 1px solid gray;
+    padding: 30px;
+    justify-content: flex-start;
+}
+
+#projects > h1 {
+    font-family: neue machina;
+    font-size: 4rem;
+}
+
+#projects > div {
+    border: 1px solid gray;
+}
+
+#projects > h3 {
+    font-size: 100;
+    font-family: neue machina;
+    color: white;
 }
 
 
